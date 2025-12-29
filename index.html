@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Pilates Events Berlin — Coming Spring 2026</title>
+    <meta
+      name="description"
+      content="Pilates Events Berlin — coming spring 2026. Inquiries for birthdays, bachelorette parties and private Pilates events."
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main class="container">
+      <p class="kicker">Berlin · Pilates Events</p>
+
+      <h1>Coming Spring 2026</h1>
+
+      <!-- Carousel -->
+      <section class="carousel" aria-label="Pilates event image carousel">
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Slide 1 -->
+            <figure class="slide">
+              <img
+                src="assets/event-1.jpg"
+                alt="Pilates event in Berlin"
+                loading="lazy"
+                onerror="this.closest('.slide').classList.add('is-missing'); this.remove();"
+              />
+              <div class="slide-fallback" aria-hidden="true">
+                Add image: <strong>assets/event-1.jpg</strong>
+              </div>
+            </figure>
+
+            <!-- Slide 2 -->
+            <figure class="slide">
+              <img
+                src="assets/event-2.jpg"
+                alt="Private group Pilates session"
+                loading="lazy"
+                onerror="this.closest('.slide').classList.add('is-missing'); this.remove();"
+              />
+              <div class="slide-fallback" aria-hidden="true">
+                Add image: <strong>assets/event-2.jpg</strong>
+              </div>
+            </figure>
+
+            <!-- Slide 3 -->
+            <figure class="slide">
+              <img
+                src="assets/event-3.jpg"
+                alt="Pilates event setup"
+                loading="lazy"
+                onerror="this.closest('.slide').classList.add('is-missing'); this.remove();"
+              />
+              <div class="slide-fallback" aria-hidden="true">
+                Add image: <strong>assets/event-3.jpg</strong>
+              </div>
+            </figure>
+
+            <!-- Slide 4 -->
+            <figure class="slide">
+              <img
+                src="assets/event-4.jpg"
+                alt="Pilates event atmosphere"
+                loading="lazy"
+                onerror="this.closest('.slide').classList.add('is-missing'); this.remove();"
+              />
+              <div class="slide-fallback" aria-hidden="true">
+                Add image: <strong>assets/event-4.jpg</strong>
+              </div>
+            </figure>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="nav-btn" type="button" id="prevBtn" aria-label="Previous image">
+            ‹
+          </button>
+
+          <div class="dots" role="tablist" aria-label="Choose image">
+            <button class="dot is-active" type="button" aria-label="Image 1" data-index="0"></button>
+            <button class="dot" type="button" aria-label="Image 2" data-index="1"></button>
+            <button class="dot" type="button" aria-label="Image 3" data-index="2"></button>
+            <button class="dot" type="button" aria-label="Image 4" data-index="3"></button>
+          </div>
+
+          <button class="nav-btn" type="button" id="nextBtn" aria-label="Next image">
+            ›
+          </button>
+        </div>
+      </section>
+
+      <p class="lead">
+        Pilates events and private group sessions in Berlin.<br />
+        Available for birthdays, bachelorette parties and custom events.
+      </p>
+
+      <a
+        class="button"
+        href="mailto:hello@YOURDOMAIN.com?subject=Pilates%20Event%20Inquiry&body=Hi%20Theresa%2C%0A%0AI%E2%80%99m%20interested%20in%20a%20Pilates%20event.%0A%0AEvent%20type%3A%20Birthday%2FBachelorette%2FOther%0ADate%3A%20____%0AGroup%20size%3A%20____%0ALocation%3A%20____%0A%0AThank%20you!"
+      >
+        Email for inquiries & pricing
+      </a>
+
+      <p class="email">
+        Or email directly:
+        <a href="mailto:hello@YOURDOMAIN.com">hello@YOURDOMAIN.com</a>
+      </p>
+
+      <footer>
+        <p>© <span id="year"></span> Pilates Events Berlin</p>
+      </footer>
+    </main>
+
+    <script>
+      // Footer year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Simple carousel
+      const track = document.getElementById("carouselTrack");
+      const slides = Array.from(track.querySelectorAll(".slide"));
+      const dots = Array.from(document.querySelectorAll(".dot"));
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      let index = 0;
+      let timer = null;
+      const AUTOPLAY_MS = 3500;
+
+      function setActiveDot(i) {
+        dots.forEach((d, idx) => d.classList.toggle("is-active", idx === i));
+      }
+
+      function goTo(i) {
+        // wrap around
+        index = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${index * 100}%)`;
+        setActiveDot(index);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        timer = setInterval(() => goTo(index + 1), AUTOPLAY_MS);
+      }
+
+      function stopAutoplay() {
+        if (timer) clearInterval(timer);
+        timer = null;
+      }
+
+      prevBtn.addEventListener("click", () => {
+        goTo(index - 1);
+        startAutoplay();
+      });
+
+      nextBtn.addEventListener("click", () => {
+        goTo(index + 1);
+        startAutoplay();
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const i = Number(dot.dataset.index);
+          goTo(i);
+          startAutoplay();
+        });
+      });
+
+      // Pause autoplay on hover (nice UX)
+      const carousel = document.querySelector(".carousel");
+      carousel.addEventListener("mouseenter", stopAutoplay);
+      carousel.addEventListener("mouseleave", startAutoplay);
+
+      // Initialize
+      goTo(0);
+      startAutoplay();
+    </script>
+  </body>
+</html>
